@@ -1,9 +1,7 @@
 BEGIN;
 
   TRUNCATE
-  thingful_reviews,
-  thingful_things,
-  thingful_users
+  game_users,
   RESTART IDENTITY CASCADE;
 
   INSERT INTO thingful_users

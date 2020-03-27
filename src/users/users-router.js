@@ -3,11 +3,11 @@ const path = require('path')
 const usersRouter = express.Router()
 const jsonBodyParser = express.json()
 const UsersService = require('./users-service')
-// forgot to import 
+
 
 usersRouter
   .post('/', jsonBodyParser, (req, res, next) => {
-    const { password, user_name, full_name, nickname } = req.body
+    const { password, user_name, full_name } = req.body
     for (const field of ['full_name', 'user_name', 'password'])
       if (!req.body[field])
         return res.status(400).json({
@@ -33,7 +33,6 @@ usersRouter
               user_name,
               password: hashedPassword,
               full_name,
-              nickname,
               date_created: 'now()',
             }
 
@@ -61,6 +60,17 @@ usersRouter
       game,
       req.user.id
     )
+      .then(() => {
+        res.status(201).send('game was updated')
+      })
+  })
+
+usersRouter
+  .get('/leaderboard', (req, res) => {
+    UsersService.getLeaderboard()
+      .then(data => {
+        res.json(data)
+      })
   })
 
 module.exports = usersRouter

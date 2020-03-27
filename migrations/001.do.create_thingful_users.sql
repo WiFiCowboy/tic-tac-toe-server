@@ -3,7 +3,6 @@ CREATE TABLE game_users (
   user_name TEXT NOT NULL UNIQUE,
   full_name TEXT NOT NULL,
   password TEXT NOT NULL,
-  nickname TEXT,
   date_created TIMESTAMP NOT NULL DEFAULT now(),
   date_modified TIMESTAMP,
   number_games INTEGER DEFAULT 0,
