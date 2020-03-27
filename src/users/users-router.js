@@ -3,7 +3,7 @@ const path = require('path')
 const usersRouter = express.Router()
 const jsonBodyParser = express.json()
 const UsersService = require('./users-service')
-
+const { requireAuth } = require('../middleware/jwt-auth')
 
 usersRouter
   .post('/', jsonBodyParser, (req, res, next) => {
@@ -67,7 +67,7 @@ usersRouter
 
 usersRouter
   .get('/leaderboard', (req, res) => {
-    UsersService.getLeaderboard()
+    UsersService.getLeaderboard(req.app.get('db'))
       .then(data => {
         res.json(data)
       })

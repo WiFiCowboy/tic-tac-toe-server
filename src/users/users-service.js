@@ -43,12 +43,11 @@ const UsersService = {
       id: user.id,
       full_name: xss(user.full_name),
       user_name: xss(user.user_name),
-      nickname: xss(user.nick_name),
       date_created: new Date(user.date_created),
     }
   },
   addGame(db, game, id) {
-    return db('game_user').update({
+    return db('game_users').update({
       number_games: knex.raw('number_games + 1'),
       number_wins: knex.raw(game ? 'number_wins + 1' : 'number_wins')
     })
@@ -57,10 +56,10 @@ const UsersService = {
       })
   },
 
-  getLeaderboard() {
-    return db.from('game_user').orderBy({
-      number_wins: 'desc'
-    })
+  getLeaderboard(db) {
+    return db.from('game_users').orderBy(
+      'number_wins', 'desc'
+    )
   }
 }
 
