@@ -53,7 +53,7 @@ usersRouter
 
 
 usersRouter
-  .post('/game', jsonBodyParser, (req, res, next) => {
+  .post('/game', jsonBodyParser, requireAuth, (req, res, next) => {
     const { game } = req.body
     UsersService.addGame(
       req.app.get('db'),
