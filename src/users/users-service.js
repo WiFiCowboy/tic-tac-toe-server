@@ -47,15 +47,28 @@ const UsersService = {
       date_created: new Date(user.date_created),
     }
   },
+
   addGame(db, game, id) {
+    // const something here to figure out if wins is true or false
+    let win = () => { game ? 'number_wins + 1' : 'number_wins' }
     return db('game_users').update({
       number_games: knex.raw('number_games + 1'),
-      number_wins: knex.raw(game ? 'number_wins + 1' : 'number_wins')
+      number_wins: knex.raw(win)
     })
       .where({
         id
       })
   },
+
+  // test
+  // addWin(db, game, id) {
+  //   return db('game_users').update({
+  //     number_wins: knex.raw(game ? 'number_wins + 1' : 'number_wins')
+  //   })
+  //     .where({
+  //       id
+  //     })
+  // },
 
   getLeaderboard(db) {
     return db.from('game_users').orderBy(
