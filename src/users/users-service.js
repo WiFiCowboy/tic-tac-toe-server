@@ -50,10 +50,11 @@ const UsersService = {
 
   addGame(db, game, id) {
     // const something here to figure out if wins is true or false
-    let win = () => { game ? 'number_wins + 1' : 'number_wins' }
+
+    // let win = () => { game ? 'number_wins + 1' : 'number_wins' }
     return db('game_users').update({
       number_games: knex.raw('number_games + 1'),
-      number_wins: knex.raw(win)
+      number_wins: knex.raw(game ? 'number_wins + 1' : 'number_wins')
     })
       .where({
         id
