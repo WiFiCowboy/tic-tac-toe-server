@@ -65,20 +65,6 @@ usersRouter
       })
   })
 
-// // test route
-// usersRouter
-//   .post('/game', jsonBodyParser, requireAuth, (req, res, next) => {
-//     const { game } = req.body
-//     UsersService.addWin(
-//       req.app.get('db'),
-//       game,
-//       req.user.id
-//     )
-//       .then(() => {
-//         res.status(201).send('win was updated')
-//       })
-//   })
-
 usersRouter
   .get('/leaderboard', (req, res) => {
     UsersService.getLeaderboard(req.app.get('db'))
