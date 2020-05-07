@@ -111,7 +111,7 @@ describe('Users Endpoints', function () {
         return supertest(app)
           .post('/api/users')
           .send(userPasswordNotComplex)
-          .expect(400, { error: `Password must contain one upper case, lower case, number and special character` })
+          .expect(400, { error: `Password must contain 1 upper case, lower case, number and special character` })
       })
 
       it(`responds 400 'User name already taken' when user_name isn't unique`, () => {
@@ -142,7 +142,6 @@ describe('Users Endpoints', function () {
             expect(res.body).to.have.property('id')
             expect(res.body.user_name).to.eql(newUser.user_name)
             expect(res.body.full_name).to.eql(newUser.full_name)
-            expect(res.body.nickname).to.eql('')
             expect(res.body).to.not.have.property('password')
             expect(res.headers.location).to.eql(`/api/users/${res.body.id}`)
             const expectedDate = new Date().toLocaleString('en', { timeZone: 'UTC' })

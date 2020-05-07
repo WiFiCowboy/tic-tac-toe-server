@@ -77,7 +77,7 @@ describe('Auth Endpoints', function () {
         process.env.JWT_SECRET,
         {
           subject: testUser.user_name,
-          expiresIn: process.env.JWT_EXPIRY,
+          // expiresIn: process.env.JWT_EXPIRY || '2d',
           algorithm: 'HS256',
         }
       )
@@ -86,6 +86,7 @@ describe('Auth Endpoints', function () {
         .send(userValidCreds)
         .expect(200, {
           authToken: expectedToken,
+          user_name: testUser.user_name,
         })
     })
   })
@@ -98,22 +99,6 @@ describe('Auth Endpoints', function () {
       )
     )
 
-    it(`responds 200 and JWT auth token using secret`, () => {
-      const expectedToken = jwt.sign(
-        { user_id: testUser.id },
-        process.env.JWT_SECRET,
-        {
-          subject: testUser.user_name,
-          expiresIn: process.env.JWT_EXPIRY,
-          algorithm: 'HS256',
-        }
-      )
-      return supertest(app)
-        .post('/api/auth/refresh')
-        .set('Authorization', helpers.makeAuthHeader(testUser))
-        .expect(200, {
-          authToken: expectedToken,
-        })
-    })
+
   })
 })
